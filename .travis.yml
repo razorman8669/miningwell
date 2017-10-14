@@ -1,11 +1,13 @@
-language: python
-python:
-  - "3.5"
-cache: pip
+language: node_js
+node_js:
+  - "8"
+cache:
+  directories:
+    - "node_modules"
 install:
   # Install any dependencies required for building your site here.
   # `awscli` is required for invalidation of CloudFront distributions.
-  - pip install awscli
+  - npm install -g awscli
 script:
   # Build your site (e.g., HTML, CSS, JS) here.
   - npm install
