@@ -4,7 +4,7 @@ app.controller('AdminDashCtrl', function($scope, $location, $route, dataService)
 	$scope.selected = [];
 
 	dataService.getData("/admin/stats", function(data) {
-		$scope.pool_stats = data;
+		$scope.pool_stats = _.omit(data, ['pps', 'solo']);
 	});
 
 	dataService.getData("/admin/wallet", function(data) {
