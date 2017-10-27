@@ -13,7 +13,7 @@
 
     <md-card flex>
         <md-card-title>
-            <span class="md-headline">Block Effort | Round Effort {{(100 * poolStats.global.roundHashes / network.difficulty).toFixed(1) | number}} %</span>
+            <span class="md-headline">Block Effort (Last 25 Blocks) | Current Effort {{(100 * poolStats.global.roundHashes / network.difficulty).toFixed(1) | number}} %</span>
         </md-card-title>
         <md-card-content layout="column">
             <div class="chartcontainer-pool" flex>
