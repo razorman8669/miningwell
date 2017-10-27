@@ -9,3 +9,4 @@ tmp
 app/vendor/
 build/
 app/globals.js
+*.sublime-workspace
