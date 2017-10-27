@@ -4,7 +4,7 @@
 		<md-card>
 			<md-toolbar class="md-table-toolbar md-default">
 				<div class="md-toolbar-tools">
-					<span class="md-title">Network Stats</span></span>
+					<span class="md-title">Network Stats</span>
 				</div>
 			</md-toolbar>
 			<md-card-content>
@@ -71,7 +71,7 @@
 										<p class="text-right">
 											<span am-time-ago="poolStats[pooltype].pool_statistics.lastBlockFoundTime * 1000">Never</span>
 											<md-tooltip>
-												{{poolStats[pooltype].pool_statistics.lastBlockFoundTime*1000 | date:'hh:mm:ss dd/MM/yy'}}
+												{{poolStats[pooltype].pool_statistics.lastBlockFoundTime*1000 | date:'HH:mm:ss dd/MM/yy'}}
 											</md-tooltip>
 										</p>
 									</md-list-item>
@@ -142,7 +142,7 @@
 				<span class="md-caption">
 					( Last Hash : <span am-time-ago="miner.lastHash * 1000">Never</span> )
 					<md-tooltip>
-						{{miner.lastHash*1000 | date:'hh:mm:ss dd/MM/yy'}}
+						{{miner.lastHash*1000 | date:'HH:mm:ss dd/MM/yy'}}
 					</md-tooltip>
 				</span>
 				<span flex></span>
@@ -157,7 +157,7 @@
 			<div flex layout="column" layout-md="row" layout-gt-md="row" class="text-center">
 				<div flex layout="column" layout-gt-xs="row">
 					<div flex>
-						<h4> Hash Rate<h2>{{miner.hash | toHashRate}}</h2></h4>
+						<h4> Hash Rate (24h Avg)<h2>{{miner.hash | toHashRate}} ({{minerStats[addr].dataset['global'].avghstfhour | toHashRate}})</h2></h4>
 					</div>
 					<div flex>
 						<h4> Total Hashes<h2>{{miner.totalHashes | number}}</h2></h4>
@@ -165,10 +165,10 @@
 				</div>
 				<div flex layout="column" layout-gt-xs="row">
 					<div flex>
-						<h5> Total Due<h2>{{miner.amtDue | toXMR | number:10}} XMR</h2></h5>
+						<h4> Total Due<h2>{{miner.amtDue | toXMR | number:10}} XMR</h2></h4>
 					</div>
 					<div flex>
-						<h5> Total Paid<h2>{{miner.amtPaid | toXMR | number:10}} XMR</h2></h5>
+						<h4> Total Paid<h2>{{miner.amtPaid | toXMR | number:10}} XMR</h2></h4>
 					</div>
 				</div>
 			</div>
@@ -184,21 +184,26 @@
 					<table md-table md-row-select ng-model="minerStats[addr].table_selected" md-progress="minerStats[addr].promise" data-md-row-select="minerStats[addr].table_options.rowSelection" multiple="{{minerStats[addr].table_options.multiSelect}}">
 						<thead md-head>
 							<tr md-row>
-								<th md-column md-numeric><h2 class="md-subhead">Worker</h2></th>
-								<th md-column md-numeric><h2 class="md-subhead">#'s</h2></th>
-								<th md-column md-numeric><h2 class="md-subhead">Total #'s</h2></th>
-								<th md-column md-numeric><h2 class="md-subhead">Last Hash</h2></th>
+								<th md-column md-numeric><h2 class="md-subhead">№</h2></th>
+                                				<th md-column md-numeric><h2 class="md-subhead">Worker</h2></th>
+                                				<th md-column md-numeric><h2 class="md-subhead">Hash Rate</h2></th>
+                                				<th md-column md-numeric><h2 class="md-subhead">1 Hour Avg. Hash Rate</h2></th>
+                                				<th md-column md-numeric><h2 class="md-subhead">24 Hour Avg. Hash Rate</h2></th>
+                                				<th md-column md-numeric><h2 class="md-subhead">Total Hashes</h2></th>
+                                				<th md-column md-numeric><h2 class="md-subhead">Last Hash</h2></th>
 							</tr>
 						</thead>
 						<tbody md-body>
 							<tr md-row ng-repeat="(index, id) in addrStats[addr].ids" md-select="id" data-md-on-select="updateCharts" md-on-deselect="updateCharts">
+								<td md-cell><p class="md-body-2">{{$index + 1}}</p></td>
 								<td md-cell><p class="md-body-2">{{id}}</p></td>
 								<td md-cell><p class="md-body-2">{{minerStats[addr].dataset[id][0].hs | toHashRate}}</p></td>
+								<td md-cell><p class="md-body-2">{{minerStats[addr].dataset[id].avghshour | toHashRate}}</p></td>
+                                                                <td md-cell><p class="md-body-2">{{minerStats[addr].dataset[id].avghstfhour | toHashRate}}</p></td>
 								<td md-cell><p class="md-body-2">{{addrStats[addr].workerStats[id].totalHash | number}}</p></td>
-								<td md-cell>
-									<span class="md-body-2" am-time-ago="minerStats[addr].dataset[id][0].ts"></span>
+								<td md-cell><span class="md-body-2" am-time-ago="minerStats[addr].dataset[id][0].ts"></span>
 									<md-tooltip>
-										{{minerStats[addr].dataset[id][0].ts | date: 'hh:mm:ss dd/MM/yy'}}
+										{{minerStats[addr].dataset[id][0].ts | date: 'HH:mm:ss dd/MM/yy'}}
 									</md-tooltip>
 								</td>
 							</tr>
