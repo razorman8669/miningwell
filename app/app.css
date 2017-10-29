@@ -232,3 +232,11 @@ md-dialog .login{
 .theironfist {
   cursor: pointer;
 }
+
+.positive {
+  color: green;
+}
+
+.negative {
+  color: red;
+}
