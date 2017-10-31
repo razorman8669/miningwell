@@ -21,6 +21,7 @@ app.controller('BlocksCtrl', function($scope, $route, dataService, timerService)
 
 	var updateMaturity = function () {
 		var luck;
+		var totalLuck = 0;
 		if($scope.poolStats.global !== undefined){
 			_.each($scope.blocks.global, function(block, index){
 				if($scope.network !== undefined) {
@@ -29,9 +30,12 @@ app.controller('BlocksCtrl', function($scope, $route, dataService, timerService)
 
 				// calculate luck
 				luck = block.shares/block.diff*100;
+				totalLuck+=luck
 				$scope.blocks.global[index].luck = (luck <= 100) ? (100-luck) : (-luck+100) ;
 				$scope.blocks.global[index].icon = (block.valid) ? 'done' : 'clear';
 			});
+			totalLuck = totalLuck/$scope.blocks.global.length
+			$scope.total_effort = (totalLuck <= 100) ? (100-totalLuck) : (-totalLuck+100) ;
 		}
 	}
 

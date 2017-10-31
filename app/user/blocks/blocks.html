@@ -4,7 +4,10 @@
 		<md-card>
 			<md-toolbar class="md-table-toolbar md-default">
 			  <div class="md-toolbar-tools">
-				<span>Blocks Found</span>
+				<span>	Blocks Found (with
+					<span ng-class="{positive: total_effort > 0, negative: total_effort <= 0}">{{total_effort | number:2}}%</span>
+					total luck for blocks on this page)
+				</span>
 			  </div>
 			</md-toolbar>
 			<md-card-content>
