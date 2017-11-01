@@ -30,6 +30,12 @@ a:active  {
   background-color: #fff;
 }
 
+@media (min-width: 600px) {
+  md-sidenav {
+    max-width: 200px;
+  }  
+}
+
 
 .statsbar md-card-title-text{
   text-align: right;

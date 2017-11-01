@@ -42,7 +42,7 @@
 						</td>
 						<td md-cell><p class="md-body-2">{{::block.height | number}}</p></td>
 						<td md-cell><p class="md-body-2">{{::block.diff | number}}</p></td>
-						<td md-cell><p ng-bind-html="::block.hash | hashToLink: 'block'"></p></td>
+						<td md-cell><p ng-bind-html="::block.hash | hashToLink: 'block'"></p><md-tooltip> {{::block.hash}}</md-tooltip></td>
 						<td md-cell><p class="md-body-2">{{::block.shares | number}}</p></td>
 						<td md-cell><p class="md-body-2" ng-class="{positive: block.luck > 0, negative: block.luck < 0}">{{::block.luck | number:2}} %</p></td>
 						<td md-cell>

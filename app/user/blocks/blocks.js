@@ -34,8 +34,12 @@ app.controller('BlocksCtrl', function($scope, $route, dataService, timerService)
 				$scope.blocks.global[index].luck = (luck <= 100) ? (100-luck) : (-luck+100) ;
 				$scope.blocks.global[index].icon = (block.valid) ? 'done' : 'clear';
 			});
-			totalLuck = totalLuck/$scope.blocks.global.length
-			$scope.total_effort = (totalLuck <= 100) ? (100-totalLuck) : (-totalLuck+100) ;
+
+			if($scope.blocks.global !== undefined) {
+			  totalLuck = totalLuck/$scope.blocks.global.length
+			  $scope.total_effort = (totalLuck <= 100) ? (100-totalLuck) : (-totalLuck+100) ;
+			}
+			
 		}
 	}
 

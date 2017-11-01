@@ -22,7 +22,7 @@ angular.module('utils.strings', [])
 
 .filter('hashToLink', function($sce) {
   return function(hash, type) {
-    var str = (hash == undefined) ? 'none' : "<a class=\"md-body-2\" target=\"_new\" href=\"https://xmrchain.net/"+type+"/" + hash + "\">" + hash + "</a>";
+    var str = (hash == undefined) ? 'none' : "<a class=\"md-body-2\" target=\"_new\" href=\"https://xmrchain.net/"+type+"/" + hash + "\">" + hash.substring(0, 9) + "...</a>";
     return $sce.trustAsHtml(str); 
   };
 })
