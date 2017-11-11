@@ -3,64 +3,65 @@
 	<div layout="column" flex>
 		<md-card>
 			<md-toolbar class="md-table-toolbar md-default">
-			  <div class="md-toolbar-tools">
-				<span>	Blocks Found (with
-					<span ng-class="{positive: total_effort > 0, negative: total_effort <= 0}">{{total_effort | number:2}}%</span>
-					total luck for blocks on this page)
-				</span>
-			  </div>
+				<div class="md-toolbar-tools">
+					<span class="md-title-small">Effort for these blocks is <span ng-style="{'color' : totalLuck.color}">{{totalLuck.effort | number:2}}%</span></span>
+				</div>
 			</md-toolbar>
 			<md-card-content>
-				<md-table-pagination md-limit="options.limit" md-limit-options="[15, 30, 50]" md-page="options.page" md-total="{{poolStats.global.totalBlocksFound}}" md-on-paginate="loadBlocks" md-page-select></md-table-pagination>
 				<md-table-container id="blocksTable">
-				  <table md-table md-progress="promise">
-					<thead md-head>
-					  <tr md-row>
-						<th md-column><h2 class="md-subhead">Valid</h2></th>
-						<th md-column><h2 class="md-subhead">Time Found</h2></th>
-						<th md-column><h2 class="md-subhead">Height</h2></th>
-						<th md-column><h2 class="md-subhead">Difficulty</h2></th>
-						<th md-column><h2 class="md-subhead">Hash</h2></th>
-						<th md-column><h2 class="md-subhead">Shares</h2></th>
-						<th md-column><h2 class="md-subhead">Luck</h2></th>
-						<th md-column><h2 class="md-subhead">Maturity</h2></th>
-						<th md-column><h2 class="md-subhead">Pool</h2></th>
-					  </tr>
-					</thead>
-					<tbody md-body>
-					  <tr md-row ng-repeat="block in blocks.global">
-						<td md-cell>
-							<md-icon ng-class="{valid: block.valid, invalid: !block.valid}">
-								{{::block.icon}}
-							</md-icon>
-						</td>
-						<td md-cell>
-							<h3 class="md-body-2" am-time-ago="block.ts"></h3>
-							<md-tooltip>
-								{{::block.ts | date:"hh:mm:ss dd/MM/yy"}}
-							</md-tooltip>
-						</td>
-						<td md-cell><p class="md-body-2">{{::block.height | number}}</p></td>
-						<td md-cell><p class="md-body-2">{{::block.diff | number}}</p></td>
-						<td md-cell><p ng-bind-html="::block.hash | hashToLink: 'block'"></p><md-tooltip> {{::block.hash}}</md-tooltip></td>
-						<td md-cell><p class="md-body-2">{{::block.shares | number}}</p></td>
-						<td md-cell><p class="md-body-2" ng-class="{positive: block.luck > 0, negative: block.luck < 0}">{{::block.luck | number:2}} %</p></td>
-						<td md-cell>
-							<md-progress-linear  md-mode="query" ng-if="!block.maturity"></md-progress-linear>
-							<p ng-if="block.maturity<0">
-								<md-icon>lock_open</md-icon> 
+					<table md-table class="xx-table"  md-progress="promise">
+						<thead md-head>
+						<tr md-row>
+							<th md-column><h2 class="md-subhead">№</h2></th>
+							<th md-column><h2 class="md-subhead">Valid</h2></th>
+							<th md-column><h2 class="md-subhead">Maturity</h2></th>
+							<th md-column><h2 class="md-subhead">Time Found</h2></th>
+							<th md-column><h2 class="md-subhead">Time Elapsed</h2></th>
+							<th md-column><h2 class="md-subhead">Reward</h2></th>
+							<th md-column><h2 class="md-subhead">Height</h2></th>
+							<th md-column><h2 class="md-subhead">Effort</h2></th>
+							<th md-column><h2 class="md-subhead">Hashes</h2></th>
+							<th md-column><h2 class="md-subhead">Difficulty</h2></th>
+                            <th md-column class="md-column xx-long-hash"><h2 class="md-subhead">Hash</h2></th>
+						</tr>
+						</thead>
+						<tbody md-body>
+						<tr md-row ng-repeat="block in blocks.global">
+							<td md-cell><p class="md-body-2">{{poolStats.global.totalBlocksFound - (options.page - 1) * options.limit - $index}}</p></td>
+							<td md-cell>
+								<md-icon ng-class="{valid: block.valid, invalid: !block.valid}">
+									{{::block.icon}}
+								</md-icon>
+							</td>
+							<td md-cell>
+								<md-progress-linear  md-mode="query" ng-if="!block.maturity"></md-progress-linear>
+								<p ng-if="block.maturity<0">
+									<md-icon>lock_open</md-icon>
+									<md-tooltip>
+										{{-block.maturity}} blocks ago
+									</md-tooltip>
+								</p>
+								<p ng-if="block.maturity>0">
+									{{block.maturity}} to go
+								</p>
+							</td>
+							<td md-cell>
+								<h3 class="md-body-2" am-time-ago="block.ts"></h3>
 								<md-tooltip>
-									{{-block.maturity}} blocks ago
+									{{::block.ts | date:"H:mm:ss dd/MM/yy"}}
 								</md-tooltip>
-							</p>
-							<p ng-if="block.maturity>0">
-								{{block.maturity}} to go
-							</p>
-						</td>
-						<td md-cell><p class="md-body-2">{{::block.pool_type}}</p></td>
-					  </tr>
-					</tbody>
-				  </table>
+							</td>
+							<td md-cell ng-if="$last"><p class="md-body-2">{{::block.time}}</p></td>
+							<td md-cell ng-if="!$last"><p class="md-body-2">{{::block.time/1000/60 | amDurationFormat : 'minute'}}</p></td>
+							<td md-cell><p class="md-body-2">{{::block.value | toXMR:10}}</p></td>
+							<td md-cell><p class="md-body-2">{{::block.height | number}}</p></td>
+							<td md-cell><p class="md-body-2" ng-style="{'color' : block.color}">{{::block.luck | number:2}}%</p></td>
+							<td md-cell><p class="md-body-2">{{::block.shares | number}}</p></td>
+							<td md-cell><p class="md-body-2">{{::block.diff | number}}</p></td>
+                            <td md-cell class="md-cell xx-long-hash"><p class="md-body-2" ng-bind-html="::block.hash | hashToLink: 'block'"></p></td>
+						</tr>
+						</tbody>
+					</table>
 				</md-table-container>
 				<md-table-pagination md-limit="options.limit" md-limit-options="[15, 30, 50]" md-page="options.page" md-total="{{poolStats.global.totalBlocksFound}}" md-on-paginate="loadBlocks" md-page-select></md-table-pagination>
 			</md-card-content>
