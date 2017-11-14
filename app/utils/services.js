@@ -168,7 +168,7 @@ angular.module('utils.services', [])
               key: "hs",
               color: "#ff6600",
               type: ['line', 'area'],
-              interpolation: { mode: "basis"},
+              //interpolation: { mode: "basis"},
               defined: function (value){
                   //console.log(value);
                   return (value !== undefined || value.x !== undefined || value.y !== undefined) ;
